@@ -16,6 +16,7 @@ app.use(bodyParser.json());
     user: 'sonvnnik_sonvnnike', // Mặc định XAMPP user là root
     password: 'Vienit810@', // Mặc định không có password
     database: 'sonvnnik_vnnike',
+
     port: 3306,
     waitForConnections: true,
     connectionLimit: 10, 

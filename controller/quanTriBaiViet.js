@@ -66,9 +66,7 @@ router.post("/services/apiBaiViet", async (req, res) => {
         !funcId ||
         !user ||
         !title ||
-        !shortContent ||
         !content ||
-        !urlImgBaiViet ||
         !shortUrl
       ) {
         return res.status(400).json({ error: thongBao.messThieuDuLieu });

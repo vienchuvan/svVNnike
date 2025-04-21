@@ -26,7 +26,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/quantri', quanTri);
 app.use('/api/sanpham', sanpham)
 app.use('/api/duan', duan)
-app.use("/uploads", express.static(uploadDir));
+app.use("/api/uploads", express.static(uploadDir));
 
 console.log("Serving static files from:", uploadDir);
 app.listen(port, () => {

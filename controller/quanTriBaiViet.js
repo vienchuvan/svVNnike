@@ -60,15 +60,9 @@ router.post("/services/apiBaiViet", async (req, res) => {
     } = req.body;
 
     console.log("data ", req.body);
-    
+
     if (funcId === 5 || funcId === 6) {
-      if (
-        !funcId ||
-        !user ||
-        !title ||
-        !content ||
-        !shortUrl
-      ) {
+      if (!funcId || !user || !title || !content || !shortUrl) {
         return res.status(400).json({ error: thongBao.messThieuDuLieu });
       }
       const titleMaHoa = Buffer.from(title, "utf-8").toString("base64");
@@ -132,7 +126,7 @@ router.post("/services/apiBaiViet", async (req, res) => {
           }
         );
       }
-    } else if (funcId ===  funAPI.funDeleteBaiViet) {
+    } else if (funcId === funAPI.funDeleteBaiViet) {
       console.log("vao day");
 
       if (!id) {
@@ -149,14 +143,12 @@ router.post("/services/apiBaiViet", async (req, res) => {
         }
       });
     } else if (funcId === funAPI.funSearchBaiVietTheoShortURL) {
-      
       db.query(
         "SELECT * FROM quantri WHERE shortURL = ?",
         [shortUrl],
         (err, result) => {
           if (err) {
             return res.status(404).json({ erro: thongBao.messThatBai });
-          
           }
           return res
             .status(200)

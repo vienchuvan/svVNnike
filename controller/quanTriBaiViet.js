@@ -131,12 +131,11 @@ router.post("/services/apiBaiViet", async (req, res) => {
 
       if (!id) {
         console.log("id ", id);
-
         return res.status(400).json({ error: thongBao.messThieuDuLieu });
       }
-      const idNumber = Number(id);
-      db.query("DELETE FROM quantri WHERE id = ? ", [], (err, result) => {
+      db.query("DELETE FROM quantri WHERE id = ?", [id], (err, result) => {
         if (err) {
+          console.log("Lỗi xóa bài viết ", err);
           return res.status(404).json({ err: "Lỗi khi xóa vui lòng thử lại" });
         } else {
           return res.status(200).json({ message: thongBao.messThanhCong });

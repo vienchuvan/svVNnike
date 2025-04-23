@@ -15,7 +15,7 @@ router.post("/services/apiSanPham", async (req, res) => {
       imgSP,
       idDanhMuc,
       id,
-   
+   idSanPham
     } = req.body;
 
     console.log("data ", req.body);
@@ -38,7 +38,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         const idNumber = Number(id);
 
         db.query(
-          "UPDATE sanpham SET  tenSP = ?, imgSP = ?, idDanhMuc = ? WHERE id = ?",
+          "UPDATE qly_sanpham SET  tenSP = ?, imgSP = ?, idDanhMuc = ? WHERE id = ?",
           [
             funcId,
             tenSP,
@@ -63,7 +63,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         const randomID = randomInt(999999);
 
         db.query(
-          "INSERT INTO sanpham(funcId,tenSP,imgSP,idDanhMuc, randomID) VALUES (?,?,?,?,?)",
+          "INSERT INTO qly_sanpham(funcId,tenSP,imgSP,idDanhMuc, randomID) VALUES (?,?,?,?,?)",
           [
             funcId,
             tenSP,
@@ -91,7 +91,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         return res.status(400).json({ error: thongBao.messThieuDuLieu });
       }
       const idNumber = Number(id);
-      db.query("DELETE FROM sanpham WHERE id = ? ", [], (err, result) => {
+      db.query("DELETE FROM qly_sanpham WHERE id = ? ", [], (err, result) => {
         if (err) {
           return res.status(404).json({ err: "Lỗi khi xóa vui lòng thử lại" });
         } else {
@@ -101,7 +101,7 @@ router.post("/services/apiSanPham", async (req, res) => {
     } else if (funcId === 12) {
       
       db.query(
-        "SELECT * FROM sanpham WHERE tenSP = ? AND idDanhMuc = ?",
+        "SELECT * FROM qly_sanpham WHERE tenSP = ? AND idDanhMuc = ?",
         [tenSP , idDanhMuc],
         (err, result) => {
           if (err) {
@@ -113,7 +113,25 @@ router.post("/services/apiSanPham", async (req, res) => {
             .json({ message: thongBao.messThanhCong, result });
         }
       );
-    } else {
+    } else if (funcId === 13) {
+      console.log("funcId ", funcId);
+      
+      db.query(
+        "SELECT * FROM quycach_sanpham WHERE idSanPham = ?",
+        [idSanPham],
+        (err, result) => {
+          if (err) {
+            return res.status(404).json({ erro: thongBao.messThatBai });
+          
+          }
+          return res
+            .status(200)
+            .json({ message: thongBao.messThanhCong, result });
+        }
+      );
+    } 
+    
+    else {
       return res.status(404).json({ err: thongBao.messThieuDuLieu });
     }
   } catch (err) {
@@ -123,7 +141,7 @@ router.post("/services/apiSanPham", async (req, res) => {
 
 
 router.get("/services/getSanPham", async (req, res) => {
-    db.query("SELECT * FROM sanpham", (err, result) => {
+    db.query("SELECT * FROM qly_sanpham", (err, result) => {
       if (err) {
         console.log("Lỗi lấy san pham, vui lòng thử lại sau");
         return res

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('../controller/auth')
 const quanTri = require('../controller/quanTriBaiViet')
 const sanpham = require('../controller/sanpham')
+const danhMuc = require('../controller/danhmuc')
 const duan = require('../controller/duan')
 const app = express();
 const port = 3001;
@@ -33,6 +34,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/quantri', quanTri);
 app.use('/api/sanpham', sanpham)
 app.use('/api/duan', duan)
+app.use('/api/danhmuc', danhMuc)
 app.use("/api/uploads", express.static(uploadDir));
 
 console.log("Serving static files from:", uploadDir);

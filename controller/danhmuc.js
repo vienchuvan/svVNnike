@@ -1,13 +1,13 @@
 const express = require('express');
 const db = require("../connectSV/index");
-// const { funUpdateSanPham, funAddSanPham, funAddBaiViet, funUpdateSanPham, funDeleteSanPham, funAddSanPham } = require('../Sevice/funAPI');
+// const { funUpdateDanhMuc, funAddDanhMuc, funAddBaiViet, funUpdateDanhMuc, funDeleteDanhMuc, funAddDanhMuc } = require('../Sevice/funAPI');
 const router = express.Router();
 const thongBao = require("../Sevice/stringThongBao");
 
 // Lấy danh sách sản phẩm
 
 
-router.post("/services/apiSanPham", async (req, res) => {
+router.post("/services/apiDanhMuc", async (req, res) => {
   try {
     const {
       funcId,
@@ -38,7 +38,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         const idNumber = Number(id);
 
         db.query(
-          "UPDATE sanpham SET  tenSP = ?, imgSP = ?, idDanhMuc = ? WHERE id = ?",
+          "UPDATE danhmuc SET  tenSP = ?, imgSP = ?, idDanhMuc = ? WHERE id = ?",
           [
             funcId,
             tenSP,
@@ -63,7 +63,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         const randomID = randomInt(999999);
 
         db.query(
-          "INSERT INTO sanpham(funcId,tenSP,imgSP,idDanhMuc, randomID) VALUES (?,?,?,?,?)",
+          "INSERT INTO danhmuc(funcId,tenSP,imgSP,idDanhMuc, randomID) VALUES (?,?,?,?,?)",
           [
             funcId,
             tenSP,
@@ -91,7 +91,7 @@ router.post("/services/apiSanPham", async (req, res) => {
         return res.status(400).json({ error: thongBao.messThieuDuLieu });
       }
       const idNumber = Number(id);
-      db.query("DELETE FROM sanpham WHERE id = ? ", [], (err, result) => {
+      db.query("DELETE FROM danhmuc WHERE id = ? ", [], (err, result) => {
         if (err) {
           return res.status(404).json({ err: "Lỗi khi xóa vui lòng thử lại" });
         } else {
@@ -101,7 +101,7 @@ router.post("/services/apiSanPham", async (req, res) => {
     } else if (funcId === 12) {
       
       db.query(
-        "SELECT * FROM sanpham WHERE tenSP = ? AND idDanhMuc = ?",
+        "SELECT * FROM danhmuc WHERE tenSP = ? AND idDanhMuc = ?",
         [tenSP , idDanhMuc],
         (err, result) => {
           if (err) {
@@ -122,13 +122,13 @@ router.post("/services/apiSanPham", async (req, res) => {
 });
 
 
-router.get("/services/getSanPham", async (req, res) => {
-    db.query("SELECT * FROM sanpham", (err, result) => {
+router.get("/services/getDanhMuc", async (req, res) => {
+    db.query("SELECT * FROM danhmuc", (err, result) => {
       if (err) {
-        console.log("Lỗi lấy san pham, vui lòng thử lại sau");
+        console.log("Lỗi lấy danhmuc, vui lòng thử lại sau");
         return res
           .status(404)
-          .json({ error: "Lỗi lấy san pham, vui lòng thử lại sau !" });
+          .json({ error: "Lỗi lấy danhmuc, vui lòng thử lại sau !" });
       }
       return res.status(200).json({ response: result });
     });

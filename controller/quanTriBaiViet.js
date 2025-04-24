@@ -39,12 +39,27 @@ router.post("/upload", upload.single("image"), (req, res) => {
     return res.status(400).json({ error: "Vui lòng chọn ảnh" });
   }
 
-  const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+  // const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+  const imageUrl = `https://sonvnnike.com.vn/api/uploads/${req.file.filename}`;
   res.json({ message: "Tải lên thành công", imageUrl });
 });
 
 // Cấu hình cho phép truy cập thư mục uploads
 router.use("/uploads", express.static(uploadDir));
+
+
+router.get('/getUploads', (req, res) => {
+  fs.readdir(uploadDir, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: 'Không thể đọc thư mục uploads.' });
+    }
+
+    const baseUrl = req.protocol + '://' + req.get('host');
+    const imageUrls = files.map(file => `${baseUrl}/api/uploads/${file}`);
+
+    res.json({ images: imageUrls });
+  });
+});
 
 router.post("/services/apiBaiViet", async (req, res) => {
   try {
@@ -59,7 +74,6 @@ router.post("/services/apiBaiViet", async (req, res) => {
       id,
     } = req.body;
 
-    console.log("data ", req.body);
 
     if (funcId === 5 || funcId === 6) {
       if (!funcId || !user || !title || !content || !shortUrl) {

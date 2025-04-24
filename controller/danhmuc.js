@@ -18,7 +18,6 @@ router.post("/services/apiDanhMuc", async (req, res) => {
    
     } = req.body;
 
-    console.log("data ", req.body);
     if (funcId === 9 || funcId === 10) {
       if (
         !funcId ||

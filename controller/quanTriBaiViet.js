@@ -47,6 +47,18 @@ router.post("/upload", upload.single("image"), (req, res) => {
 // Cấu hình cho phép truy cập thư mục uploads
 router.use("/uploads", express.static(uploadDir));
 
+// API xoá ảnh
+router.delete('/deleteImage/:imageName', (req, res) => {
+  const imageName = req.params.imageName;
+  const filePath = path.join(uploadDir, imageName);
+
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Không thể xoá ảnh.' });
+    }
+    return res.json({ message: 'Xoá ảnh thành công.' });
+  });
+});
 
 router.get('/getUploads', (req, res) => {
   fs.readdir(uploadDir, (err, files) => {

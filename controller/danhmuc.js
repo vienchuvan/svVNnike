@@ -82,10 +82,8 @@ router.post("/services/apiDanhMuc", async (req, res) => {
         );
       }
     } else if (funcId ===  11) {
-      console.log("vao day");
 
       if (!id) {
-        console.log("id ", id);
 
         return res.status(400).json({ error: thongBao.messThieuDuLieu });
       }

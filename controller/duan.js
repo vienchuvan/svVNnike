@@ -5,7 +5,6 @@ const randomID = Math.floor(Math.random() * 999999);
 
 router.post("/services/addDuAn", async (req, res) => {
   const { id, user, tenDuAn, diaChiDuAn, imgDuAn } = req.body;
-  console.log("body", req.body);
   const randomID = Math.floor(Math.random() * 999999);
 
   const query = "INSERT INTO duan (id, user, tenDuAn, diaChiDuAn, imgDuAn) VALUES (?, ?, ?, ?, ?)";
